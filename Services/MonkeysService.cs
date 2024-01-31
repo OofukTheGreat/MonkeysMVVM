@@ -170,17 +170,17 @@ namespace MonkeysMVVM.Services
             int index = random.Next(0, monkeys.Count);
             return monkeys[index];
         }
-
         public void AddMonkey(Monkey monkey)
         {
             monkeys.Add(monkey);
         }
-
         public void RemoveMonkey(Monkey monkey) 
         {
             monkeys.Remove(monkey);
         }
-
-     
+        public List<Monkey> FindMonkeysByLocation(string country)
+        {
+            return monkeys.Where(s => s.Location == country).ToList();
+        }
     }
 }

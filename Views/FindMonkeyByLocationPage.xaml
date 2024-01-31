@@ -39,6 +39,7 @@
                 <RoundRectangle CornerRadius="100" />
             </Border.StrokeShape>
             <Image
+                Aspect="AspectFill"
                 HeightRequest="200"
                 Source="{Binding ImageUrl}"
                 WidthRequest="200" />
