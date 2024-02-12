@@ -10,7 +10,7 @@
             <CollectionView ItemsSource="{Binding monkeys}" EmptyView="no bitches :(">
             
             </CollectionView>
-            <Button Text="Load bitches" Clicked="Load"></Button>
+            <Button Text="Load bitches" Command="{Binding LoadMonkeysCommand}"></Button>
         </StackLayout>
     </ScrollView>
 </ContentPage>

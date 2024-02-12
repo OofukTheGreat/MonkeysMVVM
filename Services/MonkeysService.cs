@@ -170,6 +170,10 @@ namespace MonkeysMVVM.Services
             int index = random.Next(0, monkeys.Count);
             return monkeys[index];
         }
+        public async Task<List<Monkey>> GetMonkeys()
+        {
+            return monkeys;
+        }
         public void AddMonkey(Monkey monkey)
         {
             monkeys.Add(monkey);

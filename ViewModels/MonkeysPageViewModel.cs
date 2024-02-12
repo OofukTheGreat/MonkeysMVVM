@@ -22,7 +22,12 @@ namespace MonkeysMVVM.ViewModels
         public async Task LoadMonkeys()
         {
             MonkeysService service = new MonkeysService();
-
+            var list = await service.GetMonkeys();
+            monkeys.Clear();
+            foreach (var item in list)
+            {
+                monkeys.Add(item);
+            }
         }
     }
 }
