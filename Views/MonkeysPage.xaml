@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonkeysMVVM.Views.MonkeysPage"
+             xmlns:viewModel="clr-namespace:MonkeysMVVM.ViewModels"
+             x:DataType="viewModel:MonkeysPageViewModel"
+             Title="MonkeysPage">
+    <ScrollView Margin="10">
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding monkeys}" EmptyView="no bitches :(">
+            
+            </CollectionView>
+            <Button Text="Load bitches" Clicked="Load"></Button>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
