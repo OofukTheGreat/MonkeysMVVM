@@ -9,7 +9,7 @@
     <ScrollView>
         <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadMonkeysCommand}">
             <StackLayout>
-                <CollectionView EmptyView="No monkeys :/" ItemsSource="{Binding Monkeys}">
+                <CollectionView EmptyView="No monkeys :/" ItemsSource="{Binding Monkeys}" SelectionMode="Single">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Monkey">
                             <Border HeightRequest="130" Padding="4" Margin="4,5">
