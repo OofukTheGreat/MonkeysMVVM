@@ -10,24 +10,31 @@ using MonkeysMVVM.Services;
 
 namespace MonkeysMVVM.ViewModels
 {
-    class MonkeysPageViewModel
+    class MonkeysPageViewModel:ViewModel
     {
+        private bool isRefreshing;
+        public bool IsRefreshing {  get => isRefreshing; set { isRefreshing = value; OnPropertyChanged(); } }
+        public ICommand AddMonkeysCommand { get; private set; }
         public ICommand LoadMonkeysCommand { get; private set; }
-        public ObservableCollection<Monkey> monkeys { get; set; }
+        public ICommand ClearMonkeysCommand { get; private set; }
+        public ObservableCollection<Monkey> Monkeys { get; set; }
         public MonkeysPageViewModel()
         {
-            monkeys = new ObservableCollection<Monkey>();
+            Monkeys = new ObservableCollection<Monkey>();
             LoadMonkeysCommand = new Command(async () => await LoadMonkeys());
+            LoadMonkeys();
         }
-        public async Task LoadMonkeys()
+        private async Task LoadMonkeys()
         {
+            IsRefreshing = true;
             MonkeysService service = new MonkeysService();
             var list = await service.GetMonkeys();
-            monkeys.Clear();
+            Monkeys.Clear();
             foreach (var item in list)
             {
-                monkeys.Add(item);
+                Monkeys.Add(item);
             }
+            IsRefreshing = false;
         }
     }
 }

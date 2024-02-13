@@ -3,14 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MonkeysMVVM.Views.MonkeysPage"
              xmlns:viewModel="clr-namespace:MonkeysMVVM.ViewModels"
+             xmlns:models="clr-namespace:MonkeysMVVM.Models"
              x:DataType="viewModel:MonkeysPageViewModel"
              Title="MonkeysPage">
-    <ScrollView Margin="10">
-        <StackLayout>
-            <CollectionView ItemsSource="{Binding monkeys}" EmptyView="no bitches :(">
-            
-            </CollectionView>
-            <Button Text="Load bitches" Command="{Binding LoadMonkeysCommand}"></Button>
-        </StackLayout>
+    <ScrollView>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadMonkeysCommand}">
+            <StackLayout>
+                <CollectionView EmptyView="No monkeys :/" ItemsSource="{Binding Monkeys}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Monkey">
+                            <Border HeightRequest="130" Padding="4" Margin="4,5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Margin="3" Grid.Column="0" Grid.Row="0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Name: "/>
+                                                <Span Text="{Binding Name}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Margin="3" Grid.Column="0" Grid.Row="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Location: "/>
+                                                <Span Text="{Binding Location}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2"  WidthRequest="100" HeightRequest="100" Aspect="AspectFill"  Source="{Binding ImageUrl}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </RefreshView>
+        
     </ScrollView>
 </ContentPage>
