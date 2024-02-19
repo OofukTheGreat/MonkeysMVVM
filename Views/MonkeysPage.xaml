@@ -1,46 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MonkeysMVVM.Views.MonkeysPage"
-             xmlns:viewModel="clr-namespace:MonkeysMVVM.ViewModels"
-             xmlns:models="clr-namespace:MonkeysMVVM.Models"
-             x:DataType="viewModel:MonkeysPageViewModel"
-             Title="MonkeysPage">
+<ContentPage
+    x:Class="MonkeysMVVM.Views.MonkeysPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:MonkeysMVVM.Models"
+    xmlns:viewModel="clr-namespace:MonkeysMVVM.ViewModels"
+    Title="MonkeysPage"
+    x:DataType="viewModel:MonkeysPageViewModel">
     <ScrollView>
-        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadMonkeysCommand}">
+        <RefreshView Command="{Binding LoadMonkeysCommand}" IsRefreshing="{Binding IsRefreshing}">
             <StackLayout>
-                <CollectionView EmptyView="No monkeys :/" ItemsSource="{Binding Monkeys}" SelectionMode="Single">
+                <Button Text="Add Monkeys" Margin="3"/>
+                <Button Text="Clear Monkeys" Margin="3"/>
+                <CollectionView
+                    EmptyView="No monkeys :/"
+                    ItemsSource="{Binding Monkeys}"
+                    SelectionMode="Single">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Monkey">
-                            <Border HeightRequest="130" Padding="4" Margin="4,5">
+                            <Border
+                                Margin="4,5"
+                                Padding="4"
+                                HeightRequest="130">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Margin="3" Grid.Column="0" Grid.Row="0">
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Margin="3">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="Name: "/>
-                                                <Span Text="{Binding Name}"/>
+                                                <Span Text="Name: " />
+                                                <Span Text="{Binding Name}" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-                                    <Label Margin="3" Grid.Column="0" Grid.Row="1">
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="3">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="Location: "/>
-                                                <Span Text="{Binding Location}"/>
+                                                <Span Text="Location: " />
+                                                <Span Text="{Binding Location}" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-                                    <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2"  WidthRequest="100" HeightRequest="100" Aspect="AspectFill"  Source="{Binding ImageUrl}"/>
+                                    <Image
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Aspect="AspectFill"
+                                        HeightRequest="100"
+                                        Source="{Binding ImageUrl}"
+                                        WidthRequest="100" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -48,6 +71,6 @@
                 </CollectionView>
             </StackLayout>
         </RefreshView>
-        
+
     </ScrollView>
 </ContentPage>
