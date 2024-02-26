@@ -12,9 +12,23 @@ using System.Windows.Input;
 
 namespace MonkeysMVVM.ViewModels
 {
+    [QueryProperty(nameof(Monkey), "Monkey")]
     public class ShowMonkeyViewModel:ViewModel
     {
+        private MonkeysService service;
         Monkey monkey;
+        public Monkey Monkey { get { return monkey; } set { monkey = value; UpdateFields(); } }
+
+        private void UpdateFields()
+        {
+            if (Monkey != null)
+            {
+                Name = Monkey.Name;
+                Location = Monkey.Location;
+                ImageUrl = Monkey.ImageUrl;
+            }
+        }
+
         public ICommand ShowMonkeyCommand { get; set; }
         public ICommand ShowMonkeyImage { get; set; }   
         private string name;
@@ -48,8 +62,9 @@ namespace MonkeysMVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ShowMonkeyViewModel()
+        public ShowMonkeyViewModel(MonkeysService s)
         {
+            service = s;
             ShowMonkeyCommand = new Command(GetMonkey);
             ShowMonkeyImage = new Command(ShowImage,()=>monkey!=null);//new Command(()=>{if (monkey != null)ImageUrl = monkey.ImageUrl;)}
 
@@ -57,7 +72,6 @@ namespace MonkeysMVVM.ViewModels
 
         private void GetMonkey()
         {
-            MonkeysService service = new MonkeysService();
             monkey = service.GetRandomMonkey();
             if (monkey != null)
             {

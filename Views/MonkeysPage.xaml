@@ -21,11 +21,11 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="2" Grid.Row="1" Command="{Binding AddMonkeysCommand}" Text="Add Monkey" HeightRequest="40"/>
+                    <Button Grid.Column="2" Grid.Row="1" Command="{Binding FilterMonkeysCommand}" CommandParameter="{Binding Text, Source={x:Reference filter}}" Text="Filter By" HeightRequest="40"/>
                     <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Command="{Binding ClearMonkeysCommand}" Text="Clear Monkeys" HeightRequest="50"/>
                     <Button Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="1" Command="{Binding NavigateShowMonkeyCommand}" Text="Show" HeightRequest="50"/>
-                    <Entry Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Entry}" Placeholder="Enter Monkey Name" HeightRequest="50"/>
-                    <CollectionView x:Name="SelectionPage" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" ItemsSource=                 "{Binding Monkeys}" EmptyView="No Monkeys ಥ_ಥ" SelectedItem="{Binding Monkey}">
+                    <Entry x:Name="filter" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"  Placeholder="Enter Parameter" HeightRequest="50"/>
+                    <CollectionView x:Name="SelectionPage" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding Monkeys}" EmptyView="No Monkeys ಥ_ಥ" SelectedItem="{Binding SelectedMonkey}" SelectionMode="Single">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Monkey">
                                 <SwipeView>

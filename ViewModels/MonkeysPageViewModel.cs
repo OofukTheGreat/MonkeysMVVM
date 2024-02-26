@@ -10,25 +10,29 @@ using MonkeysMVVM.Services;
 
 namespace MonkeysMVVM.ViewModels
 {
-    class MonkeysPageViewModel : ViewModel
+    public class MonkeysPageViewModel : ViewModel
     {
+        private MonkeysService service;
+
         private bool isRefreshing;
         private string entry;
+        private List<Monkey> monkeys;
         public bool IsRefreshing { get => isRefreshing; set { isRefreshing = value; OnPropertyChanged(); } }
         public string Entry { get { return entry; } set { entry = value; OnPropertyChanged(); } }
-        public Monkey Monkey { get; set; }
-        public Monkey SelectedMonkey { get; set; }
-        public ICommand AddMonkeysCommand { get; private set; }
+        private Monkey selectedMonkey;
+        public Monkey SelectedMonkey { get=>selectedMonkey; set { selectedMonkey = value; OnPropertyChanged(); } }
+        public ICommand FilterMonkeysCommand { get; private set; }
         public ICommand LoadMonkeysCommand { get; private set; }
         public ICommand ClearMonkeysCommand { get; private set; }
         public ICommand NavigateShowMonkeyCommand { get; private set; }
         public ICommand DeleteMonkeysCommand { get; private set; }
         public ObservableCollection<Monkey> Monkeys { get; set; }
-        public MonkeysPageViewModel()
+        public MonkeysPageViewModel(MonkeysService s)
         {
+            service = s;
             Monkeys = new ObservableCollection<Monkey>();
             LoadMonkeysCommand = new Command(async () => await LoadMonkeys());
-            AddMonkeysCommand = new Command(() => AddMonkeys());
+            FilterMonkeysCommand = new Command<string>((x) => FilterMonkeys(x));
             ClearMonkeysCommand = new Command(ClearMonkeys, () => Monkeys.Count > 0);
             DeleteMonkeysCommand = new Command((Object obj) => { Monkey mk = (Monkey)obj; Monkeys.Remove(mk); });
             NavigateShowMonkeyCommand = new Command(async () => await NavShowMonkeys());
@@ -39,9 +43,24 @@ namespace MonkeysMVVM.ViewModels
             Dictionary<string, object> data = new Dictionary<string, object>();
             data.Add("Monkey", SelectedMonkey);
             await AppShell.Current.GoToAsync("ShowMonkey", data);
+            SelectedMonkey = null;
         }
-        private void AddMonkeys()
+        private void FilterMonkeys(string filter)
         {
+            filter = filter.ToLower();
+            List<Monkey> filtered=new List<Monkey>();    
+            foreach (Monkey m in Monkeys)
+            {
+                if (m.Name.ToLower().Contains(filter))
+                {
+                    filtered.Add(m);
+                }
+            }
+            Monkeys.Clear();
+            foreach (Monkey m in filtered)
+            {
+                Monkeys.Add(m);
+            }
 
         }
         private void ClearMonkeys()
@@ -52,10 +71,9 @@ namespace MonkeysMVVM.ViewModels
         private async Task LoadMonkeys()
         {
             IsRefreshing = true;
-            MonkeysService service = new MonkeysService();
-            var list = await service.GetMonkeys();
+            monkeys = await service.GetMonkeys();
             Monkeys.Clear();
-            foreach (var item in list)
+            foreach (var item in monkeys)
             {
                 Monkeys.Add(item);
             }
