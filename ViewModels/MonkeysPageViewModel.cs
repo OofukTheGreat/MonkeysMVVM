@@ -47,11 +47,16 @@ namespace MonkeysMVVM.ViewModels
         }
         private void FilterMonkeys(string filter)
         {
+            Monkeys.Clear();
+            foreach (Monkey monkey in monkeys)
+            {
+                Monkeys.Add(monkey);
+            }
             filter = filter.ToLower();
             List<Monkey> filtered=new List<Monkey>();    
             foreach (Monkey m in Monkeys)
             {
-                if (m.Name.ToLower().Contains(filter))
+                if (m.Name.ToLower().Contains(filter) || m.Location.ToLower().Contains(filter))
                 {
                     filtered.Add(m);
                 }
